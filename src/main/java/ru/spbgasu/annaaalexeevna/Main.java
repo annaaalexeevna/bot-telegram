@@ -20,7 +20,8 @@ public class Main extends TelegramLongPollingCommandBot {
     public Main(DefaultBotOptions botOptions) {
         super(botOptions, BOT_USERNAME);
         register(new Command("add", "numbers to add"));
-        register(new ReplyBotKeyboard();
+        register(new ReplyBotKeyboard());
+        register(new InlineBotKeyboard());
     }
 
     public static void main(String[] args) {

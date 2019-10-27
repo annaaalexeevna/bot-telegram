@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ReplyBotKeyboard extends BotCommand {
 
-    private static final String commandIdentifier = "buttonReply";
+    private static final String commandIdentifier = "reply";
     private static final String description = "buttons for reply";
 
     public ReplyBotKeyboard() {
@@ -37,13 +37,14 @@ public class ReplyBotKeyboard extends BotCommand {
         }
     }
 
-    private ReplyBotKeyboard getKeyboard() {
+    private ReplyKeyboardMarkup getKeyboard() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setOneTimeKeyboard(true);
+
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("/update_buttons");
-        keyboardFirstRow.add("/hello_command");
+        keyboardFirstRow.add("/start");
+        keyboardFirstRow.add("Hello");
         KeyboardRow keyboardSecondRow = new KeyboardRow();
         keyboardSecondRow.add("/inline open_site");
         keyboardSecondRow.add("/inline open_world");
