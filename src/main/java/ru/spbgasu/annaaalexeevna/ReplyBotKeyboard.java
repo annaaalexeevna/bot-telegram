@@ -10,7 +10,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReplyBotKeyboard extends BotCommand {
@@ -28,7 +30,7 @@ public class ReplyBotKeyboard extends BotCommand {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat.getId().toString());
         sendMessage.setReplyMarkup((ReplyKeyboard) getKeyboard());
-        sendMessage.setText("CommandButtons updated");
+        sendMessage.setText("Reply buttons updated");
 
         try {
             absSender.execute(sendMessage);
@@ -46,14 +48,12 @@ public class ReplyBotKeyboard extends BotCommand {
         keyboardFirstRow.add("/start");
         keyboardFirstRow.add("Hello");
         KeyboardRow keyboardSecondRow = new KeyboardRow();
-        keyboardSecondRow.add("/inline open_site");
-        keyboardSecondRow.add("/inline open_world");
-        KeyboardRow keyboardThirdRow = new KeyboardRow();
-        keyboardThirdRow.add("/inline share_to_friend");
-        keyboardThirdRow.add("/inline reply_to_bot  ");
+        keyboardSecondRow.add("/inline");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss z");
+        Date date = new Date(System.currentTimeMillis());
+        keyboardSecondRow.add("Time: " + formatter.format(date));
         keyboard.add(keyboardFirstRow);
         keyboard.add(keyboardSecondRow);
-        keyboard.add(keyboardThirdRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
         return replyKeyboardMarkup;
     }

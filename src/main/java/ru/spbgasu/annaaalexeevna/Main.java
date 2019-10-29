@@ -42,29 +42,40 @@ public class Main extends TelegramLongPollingCommandBot {
     @Override
     public void processNonCommandUpdate(Update update) {
         Message message = update.getMessage();
-        SendMessage sendMessage;
-        switch (message.getText()) {
-            case "/start":
-                sendMessage = new SendMessage(message.getChatId(), "Available commands: Hello; How are you?; Command; /add");
-                break;
-            case "Hello":
-                sendMessage = new SendMessage(message.getChatId(),
-                        "Hello, " + update.getMessage().getFrom().getFirstName());
-                break;
-            case "How are you?":
-                sendMessage = new SendMessage(message.getChatId(), "I'm fine");
-                break;
-            case "Command":
-                sendMessage = new SendMessage(message.getChatId(), "/add You can add arguments");
-                break;
-            default:
-                sendMessage = new SendMessage(message.getChatId(), message.getText());
+        SendMessage sendMessage = null;
+        if (message != null) {
+            switch (message.getText()) {
+                case "/start":
+                    sendMessage = new SendMessage(message.getChatId(), "Available commands: Hello; How are you?; Command; /add; /reply; /inline");
+                    break;
+                case "Hello":
+                    sendMessage = new SendMessage(message.getChatId(),
+                            "Hello, " + update.getMessage().getFrom().getFirstName());
+                    break;
+                case "How are you?":
+                    sendMessage = new SendMessage(message.getChatId(), "I'm fine");
+                    break;
+                case "Command":
+                    sendMessage = new SendMessage(message.getChatId(), "/add You can add arguments");
+                    break;
+                default:
+                    sendMessage = new SendMessage(message.getChatId(), message.getText());
+            }
         }
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+
+        if(update.hasCallbackQuery()) {
+            sendMessage = new SendMessage().setText(
+                    update.getCallbackQuery().getData())
+                    .setChatId(update.getCallbackQuery().getMessage().getChatId());
         }
+        if (sendMessage != null) {
+            try {
+                execute(sendMessage);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
