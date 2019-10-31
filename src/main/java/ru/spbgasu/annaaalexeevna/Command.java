@@ -16,25 +16,23 @@ public class Command extends BotCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
-        long result_sum = 0;
+        long resultSum = 0;
         long add = 0;
         SendMessage sendMessage;
         for (int i = 0; i < arguments.length; i++) {
             try {
                 add = Integer.parseInt(arguments[i]);
-            }
-            catch (NumberFormatException nfe) {
+            } catch (NumberFormatException nfe) {
                 sendMessage = new SendMessage(chat.getId(), "invalid arguments");
-                try {
-                    absSender.execute(sendMessage);
-                    return;
-                } catch (TelegramApiException e) {
-                    e.printStackTrace();
-                }
+                catchError(absSender, sendMessage);
             }
-            result_sum = result_sum + add;
+            resultSum = resultSum + add;
         }
-        sendMessage = new SendMessage(chat.getId(), String.valueOf(result_sum));
+        sendMessage = new SendMessage(chat.getId(), String.valueOf(resultSum));
+        catchError(absSender, sendMessage);
+    }
+
+    public void catchError(AbsSender absSender, SendMessage sendMessage) {
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {

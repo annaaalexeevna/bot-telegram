@@ -43,29 +43,29 @@ public class Main extends TelegramLongPollingCommandBot {
     public void processNonCommandUpdate(Update update) {
         Message message = update.getMessage();
         SendMessage sendMessage = null;
+        String textMessage = null;
+
         if (message != null) {
             switch (message.getText()) {
                 case "/start":
-                    sendMessage = new SendMessage(message.getChatId(), "Available commands: Hello; How are you?; Command; /add; /reply; /inline");
+                    textMessage = "Available commands: Hello; How are you?; Command; /add; /reply; /inline";
                     break;
                 case "Hello":
-                    sendMessage = new SendMessage(message.getChatId(),
-                            "Hello, " + update.getMessage().getFrom().getFirstName());
+                    textMessage = "Hello, " + update.getMessage().getFrom().getFirstName();
                     break;
                 case "How are you?":
-                    sendMessage = new SendMessage(message.getChatId(), "I'm fine");
+                    textMessage = "I'm fine";
                     break;
                 case "Command":
-                    sendMessage = new SendMessage(message.getChatId(), "/add You can add arguments");
+                    textMessage = "/add You can add arguments";
                     break;
                 default:
-                    sendMessage = new SendMessage(message.getChatId(), message.getText());
+                    textMessage = message.getText();
             }
-        }
-
-        if(update.hasCallbackQuery()) {
-            sendMessage = new SendMessage().setText(
-                    update.getCallbackQuery().getData())
+            sendMessage = new SendMessage(message.getChatId(), textMessage);
+        } else if (update.hasCallbackQuery()) {
+            sendMessage = new SendMessage()
+                    .setText(update.getCallbackQuery().getData())
                     .setChatId(update.getCallbackQuery().getMessage().getChatId());
         }
         if (sendMessage != null) {

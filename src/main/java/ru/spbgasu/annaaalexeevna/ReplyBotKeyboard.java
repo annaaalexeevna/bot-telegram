@@ -29,7 +29,7 @@ public class ReplyBotKeyboard extends BotCommand {
     public void execute(AbsSender absSender, User user, Chat chat, String[] arguments) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chat.getId().toString());
-        sendMessage.setReplyMarkup((ReplyKeyboard) getKeyboard());
+        sendMessage.setReplyMarkup(getKeyboard());
         sendMessage.setText("Reply buttons updated");
 
         try {
