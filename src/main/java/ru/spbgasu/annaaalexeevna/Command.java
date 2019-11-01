@@ -3,7 +3,6 @@ package ru.spbgasu.annaaalexeevna;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -24,15 +23,15 @@ public class Command extends BotCommand {
                 add = Integer.parseInt(arguments[i]);
             } catch (NumberFormatException nfe) {
                 sendMessage = new SendMessage(chat.getId(), "invalid arguments");
-                catchError(absSender, sendMessage);
+                trySendMessage(absSender, sendMessage);
             }
             resultSum = resultSum + add;
         }
         sendMessage = new SendMessage(chat.getId(), String.valueOf(resultSum));
-        catchError(absSender, sendMessage);
+        trySendMessage(absSender, sendMessage);
     }
 
-    public void catchError(AbsSender absSender, SendMessage sendMessage) {
+    public void trySendMessage(AbsSender absSender, SendMessage sendMessage) {
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {

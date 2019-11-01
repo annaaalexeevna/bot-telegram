@@ -41,11 +41,11 @@ public class Main extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
-        Message message = update.getMessage();
         SendMessage sendMessage = null;
         String textMessage = null;
 
-        if (message != null) {
+        if (update.hasMessage()) {
+            Message message = update.getMessage();
             switch (message.getText()) {
                 case "/start":
                     textMessage = "Available commands: Hello; How are you?; Command; /add; /reply; /inline";
