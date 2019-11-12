@@ -15,7 +15,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class Main extends TelegramLongPollingCommandBot {
 
     private static final String BOT_USERNAME = "AnniesFirstBot";
-    private static final String BOT_TOKEN = "923328848:AAGLEjP2PPknu4eeZ4WeOhhlEVowvzzHW1k";
 
     public Main(DefaultBotOptions botOptions) {
         super(botOptions, BOT_USERNAME);
@@ -81,6 +80,6 @@ public class Main extends TelegramLongPollingCommandBot {
     @Override
     public String getBotToken() {
 
-        return BOT_TOKEN;
+        return System.getenv("BOT_TOKEN");
     }
 }
